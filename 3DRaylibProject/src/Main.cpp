@@ -8,9 +8,9 @@
 
 Window* window;
 GameCamera* gamecamera;
-Level* level;
-GameModel* gamemodel;
-GUI* gui;
+Level level;
+GameModel gamemodel;
+GUI gui;
 
 int s_width = 1920;
 int s_height = 1080;
@@ -22,15 +22,12 @@ static void OnStart()
 {
     window = new Window();
     gamecamera = new GameCamera();
-    level = new Level();
-    gamemodel = new GameModel();
-    gui = new GUI;
 
     window->CreateWindow(s_width, s_height, title, s_fps);
-    level->LoadDefaultGround();
-    gamemodel->LoadDefaultModel(TORUS);
+    level.LoadDefaultGround();
+    gamemodel.LoadDefaultModel(TORUS);
 
-    gui->Init();
+    gui.Init();
 }
 
 static void OnUpdate()
@@ -43,8 +40,8 @@ static void OnUpdate()
         UpdateCamera(&gamecamera->camera, gamecamera->cameraMode);
     }
 
-    level->DrawDefaultGround();
-    gamemodel->DrawDefaultModel();
+    level.DrawDefaultGround();
+    gamemodel.DrawDefaultModel();
 
     if (IsKeyPressed(KEY_TAB))
     {
@@ -59,32 +56,26 @@ static void OnUpdate()
 
     if (IsKeyPressed(KEY_Y))
     {
-        gui->ToggleEditor(!gui->editorOpen);
+        gui.ToggleEditor(!gui.editorOpen);
     }
 
-    if (gui->editorOpen)
+    if (gui.editorOpen)
     {
-        gui->Update(window);
+        gui.Update(window);
     }
 }
 
 static void OnShutdown()
 {
-    level->Shutdown();
-    gamemodel->Shutdown();
-    gui->Shutdown();
+    level.Shutdown();
+    gamemodel.Shutdown();
+    gui.Shutdown();
 
     delete window;
     delete gamecamera;
-    delete level;
-    delete gamemodel;
-    delete gui;
 
     window = nullptr;
     gamecamera = nullptr;
-    level = nullptr;
-    gamemodel = nullptr;
-    gui = nullptr;
 }
 
 int main(void)
