@@ -7,7 +7,7 @@
 #include "Gui.h"
 
 Window* window;
-GameCamera* gamecamera;
+GameCamera gamecamera;
 Level level;
 GameModel gamemodel;
 GUI gui;
@@ -21,7 +21,6 @@ static bool cursor = true;
 static void OnStart()
 {
     window = new Window();
-    gamecamera = new GameCamera();
 
     window->CreateWindow(s_width, s_height, title, s_fps);
     level.LoadDefaultGround();
@@ -33,11 +32,11 @@ static void OnStart()
 static void OnUpdate()
 {;
     float deltaTime = GetFrameTime();
-    BeginMode3D(gamecamera->camera);
+    BeginMode3D(gamecamera.camera);
     
     if (!cursor)
     {
-        UpdateCamera(&gamecamera->camera, gamecamera->cameraMode);
+        UpdateCamera(&gamecamera.camera, gamecamera.cameraMode);
     }
 
     level.DrawDefaultGround();
@@ -72,10 +71,7 @@ static void OnShutdown()
     gui.Shutdown();
 
     delete window;
-    delete gamecamera;
-
     window = nullptr;
-    gamecamera = nullptr;
 }
 
 int main(void)
