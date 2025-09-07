@@ -16,7 +16,7 @@ int s_width = 1920;
 int s_height = 1080;
 int s_fps = 144;
 char* title = "3D Game Test Project";
-static bool cursor = true;
+bool cursor = true;
 
 static void OnStart()
 {
