@@ -5,15 +5,38 @@ void GUI::Init()
 	rlImGuiSetup(true);
 }
 
+void KeybindsWindow()
+{
+    static bool keybindsShown = false;
+
+    if (ImGui::Button("Controls"))
+    {
+        keybindsShown = !keybindsShown;
+    }
+
+    if (keybindsShown)
+    {
+        if (ImGui::CollapsingHeader("General Controls"))
+        {
+            ImGui::BulletText("[TAB]: Cursor Toggle");
+            ImGui::BulletText("[Y]: Editor Toggle");
+            ImGui::BulletText("[W,A,S,D]: Movement");
+        }
+    }
+}
+
 void GUI::Update(Window* window)
 {
     rlImGuiBegin();
-    ImGui::Begin("UD EDITOR"); // title
- 
-   // if (ImGui::Button("> Play Game"))
-   // {
-   //     ToggleEditor(false);
-   // }
+
+    ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+    float sidebarWidth = 355.0f;
+
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(ImVec2(sidebarWidth, displaySize.y));
+
+    ImGui::Begin("UD EDITOR", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+    KeybindsWindow();
 
     float color[3] = {
         window->bgColor.r / 255.0f,
